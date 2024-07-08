@@ -238,7 +238,9 @@ extension IOVideoUnit: Running {
     // MARK: Running
     func startRunning() {
         #if os(iOS)
-        codec.passthrough = captures[0]?.preferredVideoStabilizationMode == .off
+        if let capture = captures.values.first {
+            codec.passthrough = capture.preferredVideoStabilizationMode == .off
+        }
         #endif
         codec.startRunning()
     }
