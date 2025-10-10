@@ -9,11 +9,11 @@ import UIKit
 /**
  * The VideoCodec class provides methods for encode or decode for video.
  */
-final class VideoCodec {
+public final class VideoCodec {
     static let frameInterval: Double = 0.0
 
     /// Specifies the settings for a VideoCodec.
-    var settings: VideoCodecSettings = .default {
+    public var settings: VideoCodecSettings = .default {
         didSet {
             let invalidateSession = settings.invalidateSession(oldValue)
             if invalidateSession {
@@ -25,19 +25,19 @@ final class VideoCodec {
     }
     var needsSync = true
     var passthrough = true
-    var outputStream: AsyncStream<CMSampleBuffer> {
+    public var outputStream: AsyncStream<CMSampleBuffer> {
         AsyncStream { continuation in
             self.continuation = continuation
         }
     }
-    var frameInterval = VideoCodec.frameInterval
-    var expectedFrameRate = MediaMixer.defaultFrameRate
+    public var frameInterval = VideoCodec.frameInterval
+    public var expectedFrameRate = MediaMixer.defaultFrameRate
     private var startedAt: CMTime = .zero
     private var continuation: AsyncStream<CMSampleBuffer>.Continuation?
     private var isInvalidateSession = true
     private var presentationTimeStamp: CMTime = .zero
-    private(set) var isRunning = false
-    private(set) var inputFormat: CMFormatDescription? {
+    public private(set) var isRunning = false
+    public private(set) var inputFormat: CMFormatDescription? {
         didSet {
             guard inputFormat != oldValue else {
                 return
@@ -52,9 +52,9 @@ final class VideoCodec {
             isInvalidateSession = false
         }
     }
-    private(set) var outputFormat: CMFormatDescription?
+    public private(set) var outputFormat: CMFormatDescription?
 
-    func append(_ sampleBuffer: CMSampleBuffer) {
+    public func append(_ sampleBuffer: CMSampleBuffer) {
         guard isRunning else {
             return
         }
@@ -138,7 +138,7 @@ final class VideoCodec {
 
 extension VideoCodec: Runner {
     // MARK: Running
-    func startRunning() {
+    public func startRunning() {
         guard !isRunning else {
             return
         }
@@ -160,7 +160,7 @@ extension VideoCodec: Runner {
         isRunning = true
     }
 
-    func stopRunning() {
+    public func stopRunning() {
         guard isRunning else {
             return
         }
