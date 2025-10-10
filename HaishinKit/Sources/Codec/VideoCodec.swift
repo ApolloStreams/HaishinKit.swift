@@ -5,10 +5,10 @@ import VideoToolbox
 import UIKit
 #endif
 
-final class VideoCodec {
+public final class VideoCodec {
     static let frameInterval: Double = 0.0
 
-    var settings: VideoCodecSettings = .default {
+    public var settings: VideoCodecSettings = .default {
         didSet {
             let invalidateSession = settings.invalidateSession(oldValue)
             if invalidateSession {
@@ -19,18 +19,18 @@ final class VideoCodec {
         }
     }
     var passthrough = true
-    var outputStream: AsyncStream<CMSampleBuffer> {
+    public var outputStream: AsyncStream<CMSampleBuffer> {
         AsyncStream { continuation in
             self.continuation = continuation
         }
     }
-    var frameInterval = VideoCodec.frameInterval
+    public var frameInterval = VideoCodec.frameInterval
     private var startedAt: CMTime = .zero
     private var continuation: AsyncStream<CMSampleBuffer>.Continuation?
     private var invalidateSession = true
     private var presentationTimeStamp: CMTime = .zero
-    private(set) var isRunning = false
-    private(set) var inputFormat: CMFormatDescription? {
+    public private(set) var isRunning = false
+    public private(set) var inputFormat: CMFormatDescription? {
         didSet {
             guard inputFormat != oldValue else {
                 return
@@ -45,9 +45,9 @@ final class VideoCodec {
             invalidateSession = false
         }
     }
-    private(set) var outputFormat: CMFormatDescription?
+    public private(set) var outputFormat: CMFormatDescription?
 
-    func append(_ sampleBuffer: CMSampleBuffer) {
+    public func append(_ sampleBuffer: CMSampleBuffer) {
         guard isRunning else {
             return
         }
@@ -132,7 +132,7 @@ final class VideoCodec {
 
 extension VideoCodec: Runner {
     // MARK: Running
-    func startRunning() {
+    public func startRunning() {
         guard !isRunning else {
             return
         }
@@ -154,7 +154,7 @@ extension VideoCodec: Runner {
         isRunning = true
     }
 
-    func stopRunning() {
+    public func stopRunning() {
         guard isRunning else {
             return
         }
