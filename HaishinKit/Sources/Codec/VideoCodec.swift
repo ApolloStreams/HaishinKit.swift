@@ -8,6 +8,9 @@ import UIKit
 public final class VideoCodec {
     static let frameInterval: Double = 0.0
 
+    public init() {
+    }
+
     public var settings: VideoCodecSettings = .default {
         didSet {
             let invalidateSession = settings.invalidateSession(oldValue)
