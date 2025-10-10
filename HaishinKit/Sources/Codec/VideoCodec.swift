@@ -12,6 +12,9 @@ import UIKit
 public final class VideoCodec {
     static let frameInterval: Double = 0.0
 
+    public init() {
+    }
+
     /// Specifies the settings for a VideoCodec.
     public var settings: VideoCodecSettings = .default {
         didSet {
