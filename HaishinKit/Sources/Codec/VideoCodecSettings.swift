@@ -199,6 +199,9 @@ public struct VideoCodecSettings: Codable, Sendable {
                 "ScalingMode": scalingMode.rawValue
             ] as NSObject)
         ])
+        if let expectedFrameRate {
+            options.insert(.init(key: .expectedFrameRate, value: NSNumber(value: expectedFrameRate)))
+        }
         if bitRateMode == .average {
             if let dataRateLimits, dataRateLimits.count == 2 {
                 var limits = [Double](repeating: 0.0, count: 2)
